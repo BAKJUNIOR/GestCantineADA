@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/dashbord}">
+<head>
+  <meta charset="UTF-8">
+  <title>Liste menus</title>
+</head>
+<body>
+
+<div class="main-content container-fluid" layout:fragment="content">
+
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg " style="padding-left: 16%">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+      <div class="container-fluid py-1 px-3">
+
+
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <ul class="navbar-nav  justify-content-start">
+            <li class="nav-item d-flex align-items-center">
+              <a class="btn btn-outline-warning btn-sm mb-0 me-3" th:href="@{/dishes/add}">Ajouter un plat</a>
+            </li>
+          </ul>
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <form th:action="@{/dishes/search}" method="get" class="d-flex">
+              <div class="input-group input-group-outline me-3">
+                <label class="form-label">Recherche par nom</label>
+                <input type="text" class="form-control" name="query" required>
+              </div>
+              <button type="submit" class="btn btn-outline-primary btn-sm mb-0">Recherche</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-warning shadow-primary border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">Liste des plats (<span th:text="${dishs.size()}"></span>)</h6>
+
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Libelle</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 align-items-center"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <th:block th:each="dish : ${dishs}">
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm" th:text="${dish.name}"></h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <a th:href="@{/dishes/update/{id}(id=${dish.id})}" class="badge badge-sm bg-gradient-success">Modifier</a>
+                        <form th:action="@{/dishes/delete/{id}(id=${dish.id})}" method="post" style="display:inline;">
+                          <button type="submit" class="badge badge-sm bg-gradient-danger">Supprimer</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </th:block>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer py-4  ">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+              <div class="copyright text-center text-sm text-muted text-lg-start">
+                © <script>
+                document.write(new Date().getFullYear())
+              </script>
+                ADA
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+</div>
+</body>
+</html>
